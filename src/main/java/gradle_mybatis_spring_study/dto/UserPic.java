@@ -42,7 +42,7 @@ public class UserPic {
 
 	@Override
 	public String toString() {
-		return String.format("UserPic [id=%s, name=%s, pic=%s, bio=%s]", id, name, Arrays.toString(pic), bio);
+		return String.format("UserPic [id=%s, name=%s, pic=%s, bio=%s]", id, name, pic.length, bio);
 	}
 
 }

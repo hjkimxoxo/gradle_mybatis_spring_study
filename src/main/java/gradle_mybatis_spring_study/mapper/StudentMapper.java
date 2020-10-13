@@ -29,7 +29,16 @@ public interface StudentMapper {
 	//일대일매핑
 	Student selectStudentByNoAssociation(Student student);
 	
+	//enum type
 	int insertEnumStudent(Student student);
 	Student selectStudentByNoForEnum(Student student);
+	
+	//여러개의 입력파라미터
+	Student selectStudentByMap(Map<String, String> map);
+	List<Student> selectAllStudentByMap(Map<String, String> map);
+	
+	//ResultSet
+	Map<Integer, Student> selectStudentForMap(Student student);
+	
 
 }

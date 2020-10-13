@@ -102,5 +102,37 @@
 		<select id="selectStudentByNoForEnum" parameterType="Student" resultType="Student">
 			SELECT STUD_ID,NAME,EMAIL,PHONE,DOB,GENDER FROM STUDENTS WHERE gender = #{gender}
 		</select>
-			
+		
+	<!-- 여러개의 입력 파라미터 전달 -->
+		<sql id="where_name_email">
+			<where>
+			<if test="name != null">
+				name = #{name}
+			</if>
+			<if test="email != null">
+				AND email = #{email}
+			</if>
+			</where>
+		</sql>
+		
+		<resultMap type="Student" id="StudentGenderResult" extends="StudentResult">
+			<result property="gender" column="gender" />
+		</resultMap>
+		
+		<select id="selectStudentByMap" parameterType="map" resultMap="StudentGenderResult">
+			<include refid="selectSQL"/>
+			<include refid="where_name_email"/>
+		</select>
+		
+		<select id="selectAllStudentByMap" parameterType="map" resultMap="StudentGenderResult">
+			<include refid="selectSQL"/>
+			<include refid="where_name_email"/>
+		</select>
+		
+	<!-- ResultSet -->
+		<select id="selectStudentForMap" parameterType="int" resultMap="StudentGenderResult">
+			<include refid="selectSQL"/>
+			<include refid="whereSQL"/>
+		</select>	
+	
 </mapper>
