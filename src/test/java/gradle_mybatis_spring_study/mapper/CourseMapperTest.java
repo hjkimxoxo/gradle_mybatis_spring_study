@@ -72,8 +72,8 @@ public class CourseMapperTest {
 	}
 	
 	@Test
-	public void test04SelectCoursesByCondition() {
-		System.out.println("test04");
+	public void test04SelectCasesByCondition() {
+		System.out.println("selectCases");
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("searchBy", "Tutor");
 		map.put("tutorId", 1);
@@ -94,7 +94,7 @@ public class CourseMapperTest {
 	
 	@Test
 	public void test05SelectWhereCourses() {
-		System.out.println("test05");
+		System.out.println("whereCourses");
 		Map<String, Object> map = new HashMap<String, Object>();
 		List<Course> list = mapper.selectWhereCourses(map);
 		Assert.assertNotNull(list);
