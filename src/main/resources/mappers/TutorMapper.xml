@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="gradle_mybatis_spring_study.mapper.TutorMapper">
+	<resultMap type="Tutor" id="TutorResult">
+		<id property="tutorId" column="tutor_id"/>
+		<result property="name" column="tutor_name" />
+		<result property="email" column="email" />
+		<collection property="courses" resultMap="gradle_mybatis_spring_study.mapper.CourseMapper.CourseResult" />
+	</resultMap>
+	<select id="selectTutorByTutorId" parameterType="Tutor" resultMap="TutorResult">
+		select t.tutor_id, t.name as tutor_name, email, c.course_id, c.name, description, start_date, end_date
+		from tutors t left outer join courses c on t.tutor_id=c.tutor_id
+		where t.tutor_id=#{tutorId}
+	</select>
+</mapper>

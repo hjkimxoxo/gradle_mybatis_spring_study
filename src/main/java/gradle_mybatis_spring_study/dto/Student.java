@@ -8,13 +8,15 @@ public class Student {
 	private String email;
 	private PhoneNumber phone;
 	private Date dob;
+	private Address address;
+	private Gender gender;
 
-	
 	public Student() {
 		// TODO Auto-generated constructor stub
 	}
+
 	public Student(int studId) {
-			// TODO Auto-generated constructor stub
+		// TODO Auto-generated constructor stub
 	}
 
 	public int getStudId() {
@@ -57,10 +59,26 @@ public class Student {
 		this.dob = dob;
 	}
 
+	public Address getAddress() {
+		return address;
+	}
+
+	public void setAddress(Address address) {
+		this.address = address;
+	}
+
+	public Gender getGender() {
+		return gender;
+	}
+
+	public void setGender(Gender gender) {
+		this.gender = gender;
+	}
+
 	@Override
 	public String toString() {
-		return String.format("Student [studId=%s, name=%s, email=%s, phone=%s, dob=%s]", studId, name, email, phone,
-				dob);
+		return String.format("Student [studId=%s, name=%s, email=%s, phone=%s, dob=%s, address=%s, gender=%s]", studId,
+				name, email, phone, dob, address, gender==Gender.FEMALE?"여자":"남자");
 	}
 
 }

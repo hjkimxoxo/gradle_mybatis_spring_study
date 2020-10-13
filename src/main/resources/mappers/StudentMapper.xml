@@ -3,7 +3,7 @@
 <mapper namespace="gradle_mybatis_spring_study.mapper.StudentMapper">
 	
 	<sql id="selectSQL">
-		select stud_id as studId, name, email, dob, phone from students
+		select stud_id, name, email, dob, phone, DOB,GENDER from students
 	</sql>
 	
 	<sql id="whereSQL">
@@ -13,8 +13,6 @@
 			</if>
 		</where>
 	</sql>
-	
-	
 	
 	<!-- typeHandler -->
 	
@@ -52,4 +50,57 @@
 		<select id="selectStudentByAll" resultType="Student">
 			<include refid="selectSQL"/>
 		</select>
+		
+	<!-- insert -->
+		
+		<insert id="insertStudent" parameterType="Student">
+			INSERT INTO STUDENTS(stud_id, name, email, phone, dob) VALUES(#{studId}, #{name}, #{email}, #{phone}, #{dob})
+		</insert>
+	
+	<!-- update -->		
+		<update id="updateStudent" parameterType="Student">
+			update students set name = #{name} , email = #{email}, phone = #{phone}, dob = #{dob} where stud_id = #{studId}
+		</update>
+	
+	<!-- delete -->
+		<delete id="deleteStudent" parameterType="Student">
+			delete from students where stud_id = #{studId}
+		</delete>
+		
+	<!-- 결과 매핑 -->
+		<resultMap id="StudentResult" type="Student">
+			<id column="stud_id" property="studId"/>
+			<result property="name" column="name"/>
+			<result property="email" column="email"/>
+			<result property="phone" column="phone"/>
+			<result property="dob" column="dob"/>
+		</resultMap>
+		
+		<select id="selectStudentByAllForResultMap" resultMap="StudentResult">
+			<include refid="selectSQL"/>
+		</select>
+		
+		<select id="selectStudentByAllForHashMap" resultType="map">
+			<include refid="selectSQL"/>
+		</select>
+		
+		<resultMap type="Student" id="StudentAssociation" extends="StudentResult">
+			<association property="address" resultMap="gradle_mybatis_spring_study.mapper.AddressMapper.AddressResult"></association>
+		</resultMap>
+		
+		<select id="selectStudentByNoAssociation" parameterType="Student" resultMap="StudentAssociation">
+			SELECT STUD_ID,NAME,EMAIL,PHONE,DOB,a.ADDR_ID,STREET, CITY, STATE, ZIP,COUNTRY 
+			FROM STUDENTS s JOIN ADDRESSES a ON s.ADDR_ID = a.ADDR_ID WHERE s.STUD_ID = #{studId}
+		</select>
+		
+	<!-- enum type -->	
+		<insert id="insertEnumStudent" parameterType="Student">
+			insert into students(stud_id, name, email, phone, dob, gender) 
+			values(#{studId}, #{name}, #{email}, #{phone}, #{dob}, #{gender})
+		</insert>
+		
+		<select id="selectStudentByNoForEnum" parameterType="Student" resultType="Student">
+			SELECT STUD_ID,NAME,EMAIL,PHONE,DOB,GENDER FROM STUDENTS WHERE gender = #{gender}
+		</select>
+			
 </mapper>
