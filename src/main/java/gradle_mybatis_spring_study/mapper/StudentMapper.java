@@ -40,5 +40,9 @@ public interface StudentMapper {
 	//ResultSet
 	Map<Integer, Student> selectStudentForMap(Student student);
 	
+	//set 조건
+	int updateSetStudent(Student student);
+
+	
 
 }

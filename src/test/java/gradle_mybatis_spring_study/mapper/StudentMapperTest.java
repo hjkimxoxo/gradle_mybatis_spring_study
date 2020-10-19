@@ -1,6 +1,7 @@
 package gradle_mybatis_spring_study.mapper;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
@@ -61,7 +62,7 @@ protected static final Log log = LogFactory.getLog(StudentMapperTest.class);
 		log.debug(std.toString());
 	}
 
-	//@Test
+	@Test
 	public void testSelectStudentByAll() {
 		System.out.println("All");
 		log.debug(Thread.currentThread().getStackTrace()[1].getMethodName() + "()");
@@ -201,7 +202,7 @@ protected static final Log log = LogFactory.getLog(StudentMapperTest.class);
 		log.debug(std2.toString());
 	}
 	
-	@Test
+	//@Test
 	public void test12SelectStudentByMap() {
 		System.out.println("selectStudentByMap");
 		Map<String, String> maps = new HashMap<>();
@@ -223,7 +224,7 @@ protected static final Log log = LogFactory.getLog(StudentMapperTest.class);
 		log.debug(student.toString());
 	}
 	
-	@Test
+	//@Test
 	public void test13SelectAllStudentByMap() {
 		System.out.println("selectAllStudentByMap");
 		Map<String, String> maps = new HashMap<>();
@@ -250,6 +251,18 @@ protected static final Log log = LogFactory.getLog(StudentMapperTest.class);
 		maps.clear();
 		list = mapper.selectAllStudentByMap(maps);
 		list.stream().forEach(System.out::println);
+	}
+	
+	@Test
+	public void test14UpdateSetStudent() {
+		System.out.println("updateSet");
+		Student student = new Student();
+		student.setStudId(1);
+		
+		student.setPhone(new PhoneNumber("111-321-214"));
+		student.setDob(new GregorianCalendar(1992, 06, 25).getTime());
+		int result = mapper.updateSetStudent(student);
+		Assert.assertEquals(1, result);
 	}
 
 }

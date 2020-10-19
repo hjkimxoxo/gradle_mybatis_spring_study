@@ -12,4 +12,16 @@
 		from tutors t left outer join courses c on t.tutor_id=c.tutor_id
 		where t.tutor_id=#{tutorId}
 	</select>
+	
+	<!-- transaction -->
+	<insert id="insertTutor" parameterType="Tutor">
+		INSERT INTO TUTORS(TUTOR_ID, NAME, EMAIL, PHONE, ADDR_ID)
+		VALUES (#{tutorId}, #{name}, #{email}, #{phone}, #{address.addrId})
+	</insert>
+	
+	<delete id="deleteTutor" parameterType="int">
+		DELETE FROM TUTORS
+		WHERE TUTOR_ID=#{tutorId}
+	</delete>
+		
 </mapper>

@@ -8,6 +8,29 @@ public class Tutor {
 	private String email;
 	private Address address;
 	private List<Course> courses;
+	private PhoneNumber phone;
+
+	public Tutor() {}
+	
+	
+
+	public Tutor(int tutorId, String name, String email, Address address, PhoneNumber phone) {
+		this.tutorId = tutorId;
+		this.name = name;
+		this.email = email;
+		this.address = address;
+		this.phone = phone;
+	}
+
+
+
+	public PhoneNumber getPhone() {
+		return phone;
+	}
+
+	public void setPhone(PhoneNumber phone) {
+		this.phone = phone;
+	}
 
 	public int getTutorId() {
 		return tutorId;

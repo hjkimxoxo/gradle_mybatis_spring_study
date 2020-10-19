@@ -39,3 +39,24 @@ SELECT STUD_ID,NAME,EMAIL,PHONE,DOB FROM STUDENTS WHERE gender = 1;
 SELECT * FROM USER_PICS;
 
 DELETE FROM USER_PICS WHERE id = 1;
+
+select course_id, name, description, start_date, end_date, tutor_id from courses WHERE name like '%Java%';
+
+SELECT * FROM COURSES;
+DELETE ALL WHERE COURSE_ID = 6;
+
+select t.tutor_id, t.name as tutor_name, email, c.course_id, c.name, description, start_date, end_date
+		from tutors t left outer join courses c on t.tutor_id=c.tutor_id where t.tutor_id= 1;
+		
+
+SELECT * FROM COURSES;
+
+update courses SET name='Quickstart JavaEE6', description='Enterprise App Development using JavaEE6', START_DATE = to_date('2013-04-01', 'yyyy-MM-dd'), END_DATE = to_date('2013-
+	08-30','yyyy-MM-dd'), TUTOR_ID = 1 where course_id = 6;
+
+SELECT * FROM COURSES ORDER BY COURSE_ID;
+SELECT * FROM TUTORS;
+
+DELETE FROM TUTORS WHERE TUTOR_ID = 5;
+DELETE FROM COURSES WHERE COURSE_ID = 7;
+

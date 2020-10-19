@@ -15,7 +15,9 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import gradle_mybatis_spring_study.config.ContextRoot;
+import gradle_mybatis_spring_study.dto.Address;
 import gradle_mybatis_spring_study.dto.Course;
+import gradle_mybatis_spring_study.dto.PhoneNumber;
 import gradle_mybatis_spring_study.dto.Tutor;
 
 
@@ -45,5 +47,6 @@ public class TutorMapperTest {
 		Assert.assertNotNull(list); 
 		list.stream().forEach(System.out::println);
 	}
+	
 
 }

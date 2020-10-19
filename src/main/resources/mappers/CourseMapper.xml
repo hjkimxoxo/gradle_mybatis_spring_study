@@ -16,16 +16,17 @@
 	
 	<sql id="whereSqlWithCDATA">
 		<where>
+			
 			<if test="tutorId != null">
 				<![CDATA[ and tutor_id = #{tutorId} ]]>
 			</if>
 			<if test="courseName != null">
 				<![CDATA[ and name like #{courseName} ]]>
 			</if>
-				<if test="startDate != null">
+			<if test="startDate != null">
 				<![CDATA[ and start_date >= #{startDate} ]]>
 			</if>
-				<if test="endDate != null">
+			<if test="endDate != null">
 				<![CDATA[ and end_date <= #{endDate} ]]>
 			</if>
 		</where>
@@ -58,6 +59,83 @@
 			<include refid="selectSql" />
 			<include refid="whereSqlWithCDATA" />
 		</select>
-
+	
+	<!-- trim -->
+	<select id="selectTrimCourses" parameterType="map" resultMap="CourseResult">
+		<include refid="selectSql" />
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+			<!-- 아래 tutordId != null 조건이 참이면 앞부분에 where 자동 추가 -->
+			<if test="tutorId != null">
+				tutor_id=#{tutorId}
+			</if>
+			<!-- 만약 where가 추가 된 경우 and 절 추가, where 존재하지 않는 경우 where 추가하고 and 제거 -->
+			<if test="courseName != null">
+				and name like #{courseName} 
+			</if>
+		</trim>
+	</select>
+	
+	<!-- foreach -->
+	<select id="selectCoursesForeachByTutors" parameterType="map" resultMap="CourseResult">
+		<include refid="selectSql"/>
+		<if test="tutorIds != null">
+		<where>
+			tutor_id IN
+			<foreach item="tutorId" collection="tutorIds" index="index" open="(" close=")" separator=",">
+				#{tutorId}
+			</foreach>
+		</where>
+		</if>
+	</select>
+	
+	<!-- foreach insert -->
+	<insert id="insertCourses" parameterType="map">
+		INSERT ALL
+			<foreach item="item" collection="tutors" separator=" " index="index">
+			INTO COURSES VALUES 
+			(#{item.courseId}, #{item.name}, #{item.description}, #{item.startDate}, #{item.endDate}, #{item.tutorId})
+			</foreach>
+		SELECT 1 FROM DUAL
+	</insert>
+	
+	<!-- foreach delete -->
+	<!-- DELETE FROM COURSES WHERE COURSE_ID = '3' AND COURSE_ID = '4' AND COURSE_ID = '5'; -->
+	
+	<delete id="deleteCourses" parameterType="map">
+		DELETE FROM COURSES
+			<if test="courseIds != null">
+			<where>
+				COURSE_ID IN 
+				<foreach item="item" collection="courseIds" separator="," index="index" open="(" close=")" >
+					#{item}
+				</foreach>
+			</where>
+			</if>
+	</delete>
+	
+	<!-- update set -->
+	<update id="updateCourses" parameterType="Course">
+		update courses
+		<set>
+			<if test="name != null">name=#{name},</if>
+			<if test="description != null">description=#{description},</if>
+			<if test="startDate != null">start_date=#{startDate},</if>
+			<if test="endDate != null">end_date=#{endDate},</if>
+		</set>
+		<if test="courseId != null">
+			where course_id = #{courseId}
+		</if>
+	</update>
+	
+	<!-- transaction -->
+	<insert id="insertCourse" parameterType="Course">
+		INSERT INTO COURSES(COURSE_ID, NAME, DESCRIPTION, START_DATE, END_DATE, TUTOR_ID) 
+		VALUES (#{courseId}, #{name},#{description},#{startDate},#{endDate},#{tutorId}) 
+	</insert>
+	<delete id="deleteCourse" >
+		DELETE 
+		FROM COURSES
+		WHERE COURSE_ID=#{courseId}
+	</delete>
 	
 </mapper>
